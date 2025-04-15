@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎙️ Jahid's Voice</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      text-align: center;
+      color: #333;
+    }
+    h1 {
+      color: #007bff;
+    }
+    textarea {
+      width: 90%;
+      height: 120px;
+      font-size: 16px;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    audio {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎙️ Jahid's Voice</h1>
+  <p>Choose a voice, type your message, and hear it!</p>
+
+  <textarea id="textInput" placeholder="Type your message here..."></textarea><br>
+
+  <select id="voiceSelect">
+    <option value="en-us|Linda">🇺🇸 English (US) – Linda (Female)</option>
+    <option value="en-us|John">🇺🇸 English (US) – John (Male)</option>
+    <option value="en-gb|Amy">🇬🇧 English (UK) – Amy (Female)</option>
+    <option value="en-gb|Brian">🇬🇧 English (UK) – Brian (Male)</option>
+    <option value="en-au|Olivia">🇦🇺 English (AUS) – Olivia (Female)</option>
+    <option value="en-in|Aditi">🇮🇳 English (India) – Aditi (Female)</option>
+    <option value="bn-bd|Rana">🇧🇩 Bengali – Rana (Male)</option>
+    <option value="fr-fr|Celine">🇫🇷 French – Celine (Female)</option>
+    <option value="es-es|Jorge">🇪🇸 Spanish – Jorge (Male)</option>
+    <!-- Add more if needed -->
+  </select><br>
+
+  <button onclick="speakText()">🔊 Speak Now</button>
+
+  <audio id="audioPlayer" controls></audio>
+
+  <script>
+    const apiKey = "6a854bb95e4d4c12840e88da27bd7072"; // Voice RSS API key
+
+    function speakText() {
+      const text = document.getElementById("textInput").value;
+      const voice = document.getElementById("voiceSelect").value;
+      const audio = document.getElementById("audioPlayer");
+
+      if (!text) {
+        alert("Please enter some text.");
+        return;
+      }
+
+      const [hl, v] = voice.split("|");
+      const url = `https://api.voicerss.org/?key=${apiKey}&hl=${hl}&v=${v}&src=${encodeURIComponent(text)}&c=MP3&f=48khz_16bit_stereo`;
+
+      audio.src = url;
+      audio.play();
+    }
+  </script>
+</body>
+</html>
